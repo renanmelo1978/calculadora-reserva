@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Reserva</title>
+
+    <style>
+      h1{color:rgb(251, 251, 253);border:1px solid #faf8f8}
+      p{color:rgb(244, 245, 248);font-size:20px;font-style:italic}
+    </style>
+    <STYLE TYPE="text/css">
+      .back-text {background-color: #08080a; text-align: center;}
+    </STYLE>
+    
+</head>
+<body class="bg">
+
+  
+  <div> 
+    <h1 class="titulo-central">Calculadora Reserva</h1>
+    <p class="titulo-central">Você poderá calcular o tempo em dias e a data para a sua tão sonhada RESERVA!!!</p>
+    <form class="texto-central" name="form_main">
+        <label for="date_praca"><FONT CLASS="back-text">Data de Praça:</FONT> </label> 
+        <input name="date_praca" id="date_praca" type="date"> <br>
+
+        <label for="date_Hoje"><FONT CLASS="back-text">Data Hoje: </FONT></label> 
+        <input name="date_Hoje" id="date_Hoje" type="date"> <br>
+
+        <label for="date_Pedagio"><FONT CLASS="back-text">Data do Pedágio (16/12/19):</FONT> </label> 
+        <input name="date_Pedagio" id="date_Pedagio" type="date"> <br>
+
+        <label for="tempo_extra"><FONT CLASS="back-text">Tempo Extra:</FONT> </label> 
+        <input name="tempo_extra" id="tempo_extra" type="number"> <br>
+      
+        <label for="TDPE"><FONT CLASS="back-text">Dias até o Pedágio: </FONT></label> 
+        <span CLASS="back-text" id="TDPE"></span> <br>
+
+        <label for="TTPE"><FONT CLASS="back-text">Total de Dias até o Pedágio:</FONT> </label> 
+        <span CLASS="back-text" id="TTPE"></span> <br>
+
+        <label for="PE"><FONT CLASS="back-text">Pedágio:</FONT> </label> 
+        <span CLASS="back-text" id="PE"></span> <br>
+
+        <label for="TR"><FONT CLASS="back-text">Tempo reserva com pedágio: </FONT></label> 
+        <span CLASS="back-text" id="TR"></span> <br>
+
+        <label for="TA"><FONT CLASS="back-text">Tempo de Serviço Atual:</FONT> </label> 
+        <span CLASS="back-text" id="TA"></span> <br>
+
+        <label for="DR"><FONT CLASS="back-text">Dias para Reserva: </FONT></label> 
+        <span CLASS="back-text" id="DR"></span> <br>
+
+        <label for="DTR"><FONT CLASS="back-text">Data para Reserva: </FONT></label> 
+        <span CLASS="back-text" id="DTR"></span> <br>
+      
+        <button class="bt bt-vd" type="button" onclick="countDays()">Calcular</button>
+      </form>
+    </div> <br>
+    <p class="back-text">Qualquer dúvida, pode entrar em contato!!!</p>
+    <center><a href="https://api.whatsapp.com/send?phone=5589994080305&text=Sua%20mensagem%20vai%20aqui." target="_blank">
+      <img src="./img/redes-zap.jpg" border="2">
+    
+      </a></center>
+    
+
+    
+
+
+    <script>
+    const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+const day = hour * 24;
+
+function countDays() {
+  let date_praca = new Date(document.form_main.date_praca.value);
+  let date_Pedagio = new Date(document.form_main.date_Pedagio.value);
+  let tempo_extra = new Number(document.form_main.tempo_extra.value);
+  let date_Hoje = new Date(document.form_main.date_Hoje.value);
+
+  let diff = date_Pedagio.getTime() - date_praca.getTime();
+  let diff2 = diff/day + tempo_extra + Number(1);
+  let diff3 = (Number(10950) - diff2) * Number(0.17);
+  let diff4 = (Number(10950) + diff3);
+  let diff5 = date_Hoje.getTime() - date_praca.getTime();
+  let diff6 = diff5/day + tempo_extra + Number(1);
+  let diff7 = diff4 - diff6;
+  let diff8 = date_Hoje.getTime() + diff7*day;
+  let diff9 = new Date(diff8);
+  dataFormatada = diff9.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+
+  document.getElementById('TDPE').innerText = Math.floor(diff / day);
+  document.getElementById('TTPE').innerText = Math.round(diff2);
+  document.getElementById('PE').innerText = Math.round(diff3);
+  document.getElementById('TR').innerText = Math.round(diff4);
+  document.getElementById('TA').innerText = Math.round(diff6);
+  document.getElementById('DR').innerText = Math.round(diff7);
+  document.getElementById('DTR').innerText = dataFormatada;
+}
+
+    </script>
+</body>
+</html>
